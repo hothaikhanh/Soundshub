@@ -1,0 +1,30 @@
+:root{
+    --text-color: #fff;
+    --background-color: #0D0C0F;
+    --background-color-2: #131313;
+
+}
+
+*{
+    box-sizing: inherit;
+    text-decoration: none;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    border-radius: 0;
+    outline: none;
+    border: none;
+    
+}
+
+html{
+    box-sizing: border-box;
+    font-size: 16.5px;
+    line-height: 1.2;
+    font-family: 'HelveticaNeue',Helvetica, Arial, sans-serif;
+
+}
+
+.flex-box{
+    display: flex;
+}
