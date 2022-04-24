@@ -2,6 +2,12 @@
     --text-color: #fff;
     --background-color: #0D0C0F;
     --background-color-2: #131313;
+    --highlights: #302f2f;
+    --main-gradient: linear-gradient(to right, #24f0bf , #0bbb6b);
+
+    --navbar-height: 100px;
+    --sidebar-width: 250px;
+    --player-height: 80px;
 
 }
 

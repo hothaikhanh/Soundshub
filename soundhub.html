@@ -18,91 +18,191 @@
 
 <body>
     <div id="main">
-        <div class="navbar flex-box">
+        <div id="hub-section">
+            <div class="navbar flex-box">
 
-            <div class="navbar__section--1">
-                <!-- navbar logo -->
-                <a href="#"class="navbar__logo">
+                <div class="navbar__section--1">
+            
+                    <!-- navbar search-->
+                    <div class="navbar__search container">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                        <input type="text" class=" navbar__search input" placeholder="Search for your songs...">
+                    </div>
+                    <!-- navbar search-->
+                </div>
+
+                <div class="navbar__section--2">
+
+                    <!-- navbar noti-->
+                    <div class="navbar__noti">
+                        <i class="fa-solid fa-bell"></i>
+                    </div>
+                    <!-- navbar noti-->
+
+                    <!-- navbar user-->
+                    <div class="navbar__user container">
+                        <div class="navbar__user user-pic">
+                            <img src="" alt="">
+                        </div>
+
+                        <div class="navbar__user user-name">
+                            Big Chungus
+                            <i class="fa-solid fa-caret-down"></i>
+                        </div>
+                    </div>
+                    <!-- navbar user-->
+                
+                </div>
+
+            </div>
+            
+            <div class="sidebar flex-box">
+
+                <!-- logo -->
+                <a href="#"class="sidebar__logo">
                     <img src="./assets/img/logo-title.png" alt="title" >
                 </a>
-                <!-- navbar logo -->
+                <!-- logo -->
 
 
-                <!-- navbar search-->
-                <div class="navbar__search container">
-                    <i class="fa-solid fa-magnifying-glass"></i>
-                    <input type="text" class=" navbar__search input" placeholder="Search for your songs...">
-                </div>
-                <!-- navbar search-->
+                <!-- <a href="" class="sidebar__expand" title ="Menu">
+                    <i class="fa-solid fa-bars sidebar__ico"></i>
+                </a> -->
+
+
+                <a href="" class="sidebar__fav " title ="Favorites">
+                    <i class="fa-solid fa-heart sidebar__ico"> 
+                        <span> Favorites </span>    
+                    </i>
+                </a>
+                
+
+                <a href="" class="sidebar__lib " title ="Library">
+                    <i class="fa-solid fa-book sidebar__ico">
+                        <span> Library </span>
+                    </i>
+                </a>
+
+                <a href="" class="sidebar__playlist " title ="Playlists">
+                    <i class="fa-solid fa-list sidebar__ico">
+                        <span> Playlists </span>
+                    </i>
+                </a>
+
             </div>
-
-            <div class="navbar__section--2">
-
-                <!-- navbar noti-->
-                <div class="navbar__noti">
-                    <i class="fa-solid fa-bell"></i>
-                </div>
-                <!-- navbar noti-->
-
-                <!-- navbar user-->
-                <div class="navbar__user container">
-                    <div class="navbar__user user-pic">
-                        <img src="" alt="">
-                    </div>
-
-                    <div class="navbar__user user-name">
-                        Big Chungus
-                        <i class="fa-solid fa-caret-down"></i>
-                    </div>
-                </div>
-                <!-- navbar user-->
             
+
+            <div class="player flex-box">
+                <div class="player__progress">
+                    <div class="player__progress-current">
+                    </div>  
+                </div>
+
+                <div class="player__controls">
+                    
+                    <div class="player__song">
+
+                        <div class="player__song-art">
+                            <img src="" alt="">
+                        </div>
+
+                        <div class="player__song-details">
+                            <div class="player__song-title">Title</div>
+                            <div class="player__song-artist">Artist</div>
+                        </div>
+                    </div>
+
+                    <div class="player__nav">
+                        <a class="player__nav-btns player__shuffle">
+                            <i class="fa-solid fa-shuffle"></i>
+                        </a>
+
+                        <a class="player__nav-btns player__prev">
+                            <i class="fa-solid fa-backward-step"></i>
+                        </a>
+
+                        <a class="player__nav-btns player__play">                       
+                                <i class="fa-solid fa-play play-state play-state-active "></i>
+                                <i class="fa-solid fa-pause play-state "></i>
+                                <i class="fa-solid fa-stop play-state "></i>
+                            
+                        </a>
+
+                        <a class="player__nav-btns player__fwrd">
+                            <i class="fa-solid fa-forward-step"></i>
+                        </a>
+
+                        <a class="player__nav-btns player__repeat">
+                            <i class="fa-solid fa-repeat"></i>
+                        </a>
+                    </div>
+
+                    <div class="player__volume">
+                        <btn href="" class="volume__toggle">
+                            <i class="fa-solid fa-volume-high volume-state volume-state-active"></i>
+                            <i class="fa-solid fa-volume-xmark volume-state"></i>
+                        </btn>
+
+                        <div class="volume__bar">
+                            <div class="volume__bar-level"></div>
+                        </div>
+                    </div>
+                </div>   
+            </div> 
+        </div>
+
+        <div id="main-section">
+            <div class="current-song">
+                    <img src="" alt="" class="current-song__art">
+                    <div class="current-song__info">
+                        <h1 class="current-song__album">Album</h1>
+
+                        <h1 class="current-song__title">Song Title</h1>
+                        <h3 class="current-song__artist">Artist</h3>
+                    </div>
             </div>
 
+            <div class="tracklist">
+                <ul class="song-list">
+
+                    <div class="list-headings">
+                        <span class="song-item__index">#</span>
+                        <span class="song-item__title">Title</span>
+                        <span class="song-item__artist">Artist</span>
+                        <span class="song-item__duration">Durartion</span>
+                    </div>
+                    
+                    <li class="song-item song-active">
+                        <span class="song-item__index">1</span>
+                        <img src="" alt="" class="song-item__art">
+                        <div class="song-item__title">Title</div>
+                        <div class="song-item__artist">Artist</div>
+                        <span class="song-item__duration">3:00</span>
+                    </li>
+                    
+                    <li class="song-item">
+                        <span class="song-item__index">1</span>
+                        <img src="" alt="" class="song-item__art">
+                        <div class="song-item__title">Title</div>
+                        <div class="song-item__artist">Artist</div>
+                        <span class="song-item__duration">3:00</span>
+                    </li>
+                    
+                    <li class="song-item">
+                        <span class="song-item__index">1</span>
+                        <img src="" alt="" class="song-item__art">
+                        <div class="song-item__title">Title</div>
+                        <div class="song-item__artist">Artist</div>
+                        <span class="song-item__duration">3:00</span>
+                    </li>
+
+                    
+                    
+                    
+                </ul>
+            </div>
         </div>
         
-        <div class="sidebar flex-box">
-
-            <a href="" class="sidebar__expand ">
-                <i class="fa-solid fa-bars sidebar__ico"></i>
-            </a>
-
-
-            <a href="" class="sidebar__home ">
-                <i class="fa-solid fa-house sidebar__ico"></i>
-
-            </a>
-
-            <a href="" class="sidebar__fav ">
-                <i class="fa-solid fa-heart sidebar__ico"></i>
-
-            </a>
-
-            <a href="" class="sidebar__lib ">
-                <i class="fa-solid fa-book sidebar__ico"></i>
-
-            </a>
-
-            <a href="" class="sidebar__playlist ">
-                <i class="fa-solid fa-list sidebar__ico"></i>
-
-            </a>
-
-        </div>
-        
-
-
-        <div class="queue">
-
-        </div>
-
-        <div class="library">
-
-        </div>
-
-        <div class="control">
-
-        </div>
         
     </div>
     <script src="./js/js-main.js"></script>
