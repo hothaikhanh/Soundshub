@@ -11,7 +11,7 @@ body{
 }
 
 
-#hub-section{
+#hud-section{
     z-index: 10;
 }
 
@@ -492,6 +492,7 @@ body{
     flex-direction: column;
     width: calc(100% - 70px);
     margin-left: 50px;
+    padding-bottom: var(--player-height);
 }
 
 
@@ -533,6 +534,7 @@ body{
 
 .song-item__index{
     margin-left: 20px;
+    min-width: 20px;
 }
 
 .song-item__art{
@@ -546,13 +548,15 @@ body{
 
 .song-item__title{
     font-weight: 600;
-    width: 300px;
+    width: 20%;
     
 }
 
 
 .song-item__artist{
     font-weight: 100;
+    width: 20%;
+
     
 }
 
@@ -563,5 +567,17 @@ body{
     
 }
 
+
+.song-item__album{
+    margin-left: 20px;
+    width: 20%;
+
+}
+.song-item__genre{
+    margin-left: 20px;
+    width: 20%;
+
+
+}
 
 /* tracklist section end */
