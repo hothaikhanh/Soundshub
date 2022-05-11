@@ -1,52 +1,44 @@
 const $ = document.querySelector.bind(document)
 const $$ = document.querySelectorAll.bind(document)
+const songList = $(".song-list")
 
 
-//fetch JSON data from directory
-var songLibrary = [0,1,2];
-
-
-//fetch sth.....
-
-
-
-//create an array containing the paths for every songs
-
-// var songsNumber = songLibrary.length
-
-
-// const songList = $(".song-list")
-
-// const app = {
-//     songs: [
-//         songLibrary[0],
-//         songLibrary[1],
-//         songLibrary[2],
-        
-//     ]
+// fetch JSON data from directory
+async function getJSON() {
+    const res = await fetch("./songs_lib.JSON");
+    const json = await res.json();
+    app.songs = json
+    console.log("fetched")
+}
 
 
 
+// main app
+const app = { // var songsNumber = songLibrary.length //not necessary
+
+    render:  async function (){
+        await getJSON()
+        console.log("rendering")
+          let songItems = this.songs.map(function(song,index){
+            return element = 
+            `<li class="song-item">
+            <audio class = "song-item__mp3"  src="${song.path}"></audio>
+            <span class="song-item__index">${index+1}</span>
+            <img src="data:${song.coverArt.format};base64,${song.coverArt.image}" alt="" class="song-item__art">
+            <div class="song-item__title">${song.title}</div>
+            <div class="song-item__artist">${song.artist}</div>
+            <div class="song-item__album">${song.album}</div>
+            <div class="song-item__genre">${song.genre}</div>
+            <span class="song-item__duration">${Math.floor(song.duration/60)}:${(song.duration - Math.floor(song.duration / 60)*60).toFixed(0)}</span>
+            </li>`
+        })
+
+        songList.innerHTML += songItems.join('')
+    }
 
 
-// }
+
+}
 
 
-
-    // songList.innerHTML += `
-    //     <li class="song-item">
-    //         <audio class = "song-item__mp3" data-index ="${i+1}" src="${paths[i]}"></audio>
-    //         <span class="song-item__index"> ${i+1} </span>
-    //         <img src="" alt="" class="song-item__art">    
-    //         <div class="song-item__title"></div>
-    //         <div class="song-item__artist"></div>
-    //         <div class="song-item__album"></div>
-    //         <div class="song-item__genre"></div>
-    //         <span class="song-item__duration"></span>
-    //     </li>`
-
-        
-
-
-
-
+app.render()
