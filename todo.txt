@@ -1,0 +1,4 @@
+shuffle function
+repeat function
+seek function
+volume function

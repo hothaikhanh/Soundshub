@@ -18,10 +18,13 @@ async function getJSON() {
 const app = { 
     currentSongIndex: -1,
     songs: [],
+    songsNumber: 0,
+    isShuffle: false,
+    isRepeat: false,
 
     render: async function () {
         await getJSON()
-
+        this.songsNumber = this.songs.length 
         //create html elements
         let songItems = this.songs.map((song, index) => {
             return element = `<li class="song-item">
@@ -56,6 +59,7 @@ const app = {
     addEvent: function () {
         let songItems = $$(".song-item")
 
+        //click for songs in library
         songItems.forEach(element => {
             element.addEventListener(
                 "click", function (e) {
@@ -67,30 +71,100 @@ const app = {
         })
 
         //click events for play button
-        playBtn[0].onclick = (e) => {
+        playBtn[0].parentNode.addEventListener("click", (e) => {
             if(app.currentSongIndex >= 0){
-                audioElements.play()
-                playBtn[0].classList.remove("play-state-active")
-                playBtn[1].classList.add("play-state-active")
+                if(audioElements.paused){
+                    app.playAudio()
+                }
+                else{
+                    app.pauseAudio()
+                }
+            }
+        })
+          
+        //click events for next button
+        $(".player__fwrd").addEventListener("click",(e) =>{
+            this.nextSong()
+        })
+
+        //click events for prev button
+        $(".player__prev").addEventListener("click",(e) =>{
+            this.prevSong()
+        })
+
+        //click event for Reapeat button
+        $(".player__repeat").addEventListener("click",(e) =>{
+            this.isRepeat = !this.isRepeat
+            $(".player__repeat").classList.toggle("player--active")
+        })
+
+        //click event for Shuffle button
+        $(".player__shuffle").addEventListener("click",(e) =>{
+            this.isShuffle = !this.isShuffle
+            $(".player__shuffle").classList.toggle("player--active")
+        })
+
+    },
+
+    nextSong: function (){
+        if(!this.isShuffle){
+            if(this.currentSongIndex >= 0 && this.currentSongIndex < this.songsNumber - 1){
+                this.currentSongIndex++
+                this.changeUI()
+                this.updateAudio()
+            }
+
+            else if(this.currentSongIndex == this.songsNumber - 1){
+                this.currentSongIndex = 0
+                this.changeUI()
+                this.updateAudio()
             }
         }
-        
-        playBtn[1].onclick = (e) => {
-            audioElements.pause()
-            playBtn[0].classList.add("play-state-active")
-            playBtn[1].classList.remove("play-state-active")
 
-        }        
+        else{
+            this.playShuffle()
+        }
+    },
 
+
+    prevSong: function (){
+        if(!this.isShuffle){
+            if(this.currentSongIndex > 0 && this.currentSongIndex <= this.songsNumber - 1){
+                this.currentSongIndex--
+                this.changeUI()
+                this.updateAudio()
+            }
+
+            else if(this.currentSongIndex == 0){
+                this.currentSongIndex = 9
+                this.changeUI()
+                this.updateAudio()
+            }
+        }
+
+        else{
+            this.playShuffle()
+        }
+    },
+
+    playShuffle: function (){
+        //todo
+    },
+
+    playLoop: function () {
+        //todo
     },
 
     changeUI: function () {
 
         //display current song on player
-        let playerData = $(".player__song")
         if(this.currentSongIndex >= 0){
-            playerData.style.opacity = 1
+            $(".player__song").style.opacity = 1
+            $(".player__progress").style.display = "flex"
         }
+
+
+
 
         //set varibles for html elements
         const headerArtist = $(".current-song__artist")
@@ -128,17 +202,35 @@ const app = {
 
     updateAudio: function() { //plays audio after changing songs
         audioElements.src = app.songs[this.currentSongIndex].path
-        audioElements.load()
-        audioElements.play()
+        this.playAudio()
+    },
 
+
+    playAudio: function() {
+        audioElements.play()
         playBtn[0].classList.remove("play-state-active")
         playBtn[1].classList.add("play-state-active")
+        this.updateProgressBar()
+        
 
     },
 
-    
+    pauseAudio: function(){
+        audioElements.pause()
+        playBtn[1].classList.remove("play-state-active")
+        playBtn[0].classList.add("play-state-active")
+    },
 
+    updateProgressBar: function(){
+        let seekbar = $(".player__progress-current")
+        let currentPercentage = 0 
+        setInterval(function(){
+            currentPercentage = audioElements.currentTime / app.songs[app.currentSongIndex].duration * 100
+            seekbar.style.width = `${currentPercentage}%`
+        }, 100)
 
+        
+    },
 
     start: async function () {
         await this.render()

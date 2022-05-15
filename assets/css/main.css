@@ -221,6 +221,10 @@ body{
     flex-grow: 1;
     background-color: rgba(255,255,255,0.3);
     cursor: pointer;
+    display: none;
+    align-items: center;
+    transition: display .2s ease-in;
+    
     
 }
 
@@ -228,12 +232,11 @@ body{
     height: 100%;
     width: 0%;
     background-image: var(--main-gradient);
-    opacity: .5;
-    
+  
 }
 
 .player__progress:hover .player__progress-current{
-    opacity: 1;
+    height: 150%;
 }
 /* progress bar */
 
@@ -261,9 +264,9 @@ body{
 
 .player__nav-btns{
     cursor: pointer;
-    margin: auto 30px; 
+    margin: auto 28px; 
     font-size: 1.25rem;
-    color: rgba(255,255,255,0.5)
+    color: rgba(255,255,255,0.2)
 
 }
 
@@ -277,13 +280,8 @@ body{
 }
 
 
-
-.player__shuffle{
-
-}
-
-.player__prev{
-
+.player__nav-btns.player--active{
+    color: #24f0bf;
 }
 
 
@@ -293,21 +291,12 @@ body{
     font-size: 1.5rem;
     background-color: rgba(255,255,255,0.5);
     border-radius: 50%;
-    width: 50px;
-    height: 50px;
-    display: inline-block;
-    text-align: center;
+    width: 13%;
+    aspect-ratio: 1 / 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     color: var(--background-color-2);
-}
-
-.player__play>i{
-    width: 100%;
-    line-height: 50px;
-    color: inherit
-}
-
-.player__play>.fa-play{
-    margin-left: 2px;
 }
 
 
@@ -328,13 +317,6 @@ body{
 
 
 
-.player__fwrd{
-
-}
-
-.player__repeat{
-
-}
 /* player main control  */
 
 
@@ -535,11 +517,13 @@ body{
     gap: 30px;
     display: flex;
     align-items: center;
-    
     cursor: pointer;
+    
+   
 }
 
 .song-item.song-active{
+
     background-image: var(--main-gradient);
     color: black;
 }
