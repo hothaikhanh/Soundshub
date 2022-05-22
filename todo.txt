@@ -1,4 +1,5 @@
 shuffle function
 repeat function
-seek function
-volume function
+next song after time ends
+dragable slider
+

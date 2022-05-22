@@ -63,7 +63,7 @@ body{
 
 
 .navbar__search.container i{
-    color: rgba(255,255,255,0.5);
+    color: var(--text-color);
     margin: auto 20px;
 }
 
@@ -71,7 +71,7 @@ body{
     width: 100%;
     height: 100%;
     background-color: rgba(0,0,0,0);
-    color: rgba(255,255,255,0.5);
+    color: var(--text-color);
 }
 
 
@@ -86,7 +86,7 @@ body{
     
 }
 .navbar__noti i{
-    color: rgba(255,255,255,0.5);
+    color: var(--text-color);
     height: 100%;
     width: 100%;
     line-height: 40px;
@@ -116,7 +116,7 @@ body{
 }
 
 .navbar__user.container:hover{
-    background-color: rgba(255,255,255,0.5);
+    background-color: var(--text-color);
     
 }
 
@@ -128,13 +128,13 @@ body{
 .navbar__user.user-pic{
     height: 40px;
     width: 40px;
-    background-color: rgba(255,255,255,0.5);
+    background-color: var(--text-color);
     border-radius: 100%;
     
 }
 
 .navbar__user.user-name{
-    color: rgba(255,255,255,0.5);
+    color: var(--text-color);
     margin: 0px 10px;
     font-weight: 700;
     line-height: 60px;
@@ -183,7 +183,7 @@ body{
 }
 
 .sidebar__ico{
-    color: rgba(255,255,255,0.5);
+    color: var(--text-color);
     height: 100%;
     width: 100%;
     line-height: 40px;
@@ -224,9 +224,8 @@ body{
     display: none;
     align-items: center;
     transition: display .2s ease-in;
-    
-    
 }
+
 
 .player__progress-current{
     height: 100%;
@@ -289,9 +288,9 @@ body{
 
 .player__play{
     font-size: 1.5rem;
-    background-color: rgba(255,255,255,0.5);
+    background-color: var(--text-color);
     border-radius: 50%;
-    width: 13%;
+    width: 3rem;
     aspect-ratio: 1 / 1;
     display: flex;
     align-items: center;
@@ -366,20 +365,18 @@ body{
 
 /* player volume */
 .player__volume{
-    
-    
     width: 30%;
-    
     display: flex;
     align-items: center;
     justify-content: end;
-    padding-right: 20px;
+    margin-right: 20px;
+    
 }
 
 
 .volume__toggle{
     
-    color: rgba(255,255,255,0.5);
+    color: var(--text-color);
     cursor: pointer;
 }
 .volume__toggle:hover{
@@ -409,14 +406,28 @@ body{
 
 .volume__bar-level{
     height: 100%;
-    width: 50%;
-    background-color: rgba(255,255,255,0.5); 
+    width: 0%;
+    background-color: var(--text-color); 
 }
 
 .volume__bar-level:hover{
     background-color: white;
 }
+
 /* player volume */
+
+
+/* player time signature */
+.player__time{
+    color: var(--text-color);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding-right: 20px;
+    font-size:  1rem;
+}
+
+/* player time signature */
 /* player control */
 /* player section end*/
 
