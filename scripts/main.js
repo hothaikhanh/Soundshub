@@ -4,7 +4,7 @@ const songList = $(".song-list")
 const audioElements = $(".main-audio")
 const volumeSlider = $(".volume__bar-level")
 const playBtn = $$(".play-state")
-var audioVolume = .7
+
 
 // fetch JSON data from directory
 async function getJSON() {
@@ -32,13 +32,37 @@ function timeFormatter(timeDuration) {
 }
 
 
+function randomArray(max, current) {
+
+    for (var array = [], i = 0; i < max; i++) {
+        array.push(i)
+    }
+
+    for (var newArray = [], i = max, tmp, removed; i > 0; i--) {
+        tmp = Math.floor(Math.random() * i)
+        removed = array.splice(tmp, 1)[0]
+        newArray.push(removed)
+    }
+
+    newArray.push(current)
+    dupEl = newArray.findIndex(dupl => dupl === current)
+    newArray.splice(dupEl, 1)
+
+    return newArray
+}
+
+
+
 const app = {
     currentSongIndex: -1,
+    shuffleSongIndex: -1,
     songs: [],
+    shuffleSongs: [],
     songsNumber: 0,
     isShuffle: false,
     isRepeat: false,
     isMute: false,
+    audioVolume: .7,
 
 
     render: async function () {
@@ -81,6 +105,7 @@ const app = {
             element.addEventListener(
                 "click", function (e) {
                     app.currentSongIndex = Array.from(element.parentElement.children).indexOf(element) - 1
+                    if (app.isShuffle) { app.shufflePlaylist() }
                     app.changeUI()
                     app.updateAudio()
                 }
@@ -96,6 +121,10 @@ const app = {
                 else {
                     app.pauseAudio()
                 }
+            }
+
+            else {
+                app.nextSong()
             }
         })
 
@@ -119,6 +148,14 @@ const app = {
         $(".player__shuffle").addEventListener("click", (e) => {
             this.isShuffle = !this.isShuffle
             $(".player__shuffle").classList.toggle("player--active")
+            if (this.isShuffle) {
+                this.shufflePlaylist()
+
+            }
+            else {
+                this.shuffleSongs = []
+            }
+
         })
 
         //click event for mute button
@@ -129,8 +166,8 @@ const app = {
 
         //change volume on click
         $(".volume__bar").addEventListener("click", (e) => {
-            this.changeVolume(e)
-            this.setVolume()
+            this.setVolume(e)
+            this.updateVolume()
         })
 
         //click event for progress bar
@@ -143,55 +180,73 @@ const app = {
     },
 
     nextSong: function () {
-        if (!this.isShuffle) {
-            if (this.currentSongIndex >= 0 && this.currentSongIndex < this.songsNumber - 1) {
-                this.currentSongIndex++
-                this.changeUI()
-                this.updateAudio()
-            }
-
-            else if (this.currentSongIndex == this.songsNumber - 1) {
-                this.currentSongIndex = 0
-                this.changeUI()
-                this.updateAudio()
-            }
+        if (!this.isShuffle && this.currentSongIndex >= -1 && this.currentSongIndex < this.songsNumber - 1) {
+            this.currentSongIndex++
+            this.changeUI()
+            this.updateAudio()
         }
 
-        else {
-            this.playShuffle()
+        else if (!this.isShuffle && this.currentSongIndex == this.songsNumber - 1) {
+            this.currentSongIndex = 0
+            this.changeUI()
+            this.updateAudio()
         }
+
+
+        else if (this.isShuffle && this.shuffleSongIndex >= -1 && this.shuffleSongIndex < this.songsNumber - 1) {
+            this.shuffleSongIndex++
+            this.currentSongIndex = this.shuffleSongs[this.shuffleSongIndex]
+            this.changeUI()
+            this.updateAudio()
+        }
+
+        else if (this.isShuffle && this.shuffleSongIndex == this.songsNumber - 1) {
+            this.shufflePlaylist()
+            this.shuffleSongIndex++
+            this.currentSongIndex = this.shuffleSongs[this.shuffleSongIndex]
+            this.changeUI()
+            this.updateAudio()
+        }
+
     },
 
 
     prevSong: function () {
-        if (!this.isShuffle) {
-            if (this.currentSongIndex > 0 && this.currentSongIndex <= this.songsNumber - 1) {
-                this.currentSongIndex--
-                this.changeUI()
-                this.updateAudio()
-            }
-
-            else if (this.currentSongIndex == 0) {
-                this.currentSongIndex = 9
-                this.changeUI()
-                this.updateAudio()
-            }
+        if (!this.isShuffle && this.currentSongIndex > 0 && this.currentSongIndex <= this.songsNumber - 1) {
+            this.currentSongIndex--
+            this.changeUI()
+            this.updateAudio()
         }
 
-        else {
-            this.playShuffle()
+        else if (!this.isShuffle && this.currentSongIndex == 0) {
+            this.currentSongIndex = this.songsNumber - 1
+            this.changeUI()
+            this.updateAudio()
+        }
+
+        if (this.isShuffle && this.shuffleSongIndex > 0 && this.shuffleSongIndex <= this.songsNumber - 1) {
+            this.shuffleSongIndex--
+            this.currentSongIndex = this.shuffleSongs[this.shuffleSongIndex]
+            this.changeUI()
+            this.updateAudio()
+        }
+
+        else if (this.isShuffle && this.shuffleSongIndex == 0) {
+            this.shufflePlaylist()
+            this.shuffleSongIndex = this.songsNumber - 2
+            this.currentSongIndex = this.shuffleSongs[this.shuffleSongIndex]
+            this.changeUI()
+            this.updateAudio()
         }
     },
 
-    playShuffle: function () {
-        //todo
-    },
+
 
     playLoop: function () {
         //todo
     },
 
-    changeUI:  function () {//update UI after a new song is selected
+    changeUI: function () {//update UI after a new song is selected
 
         //reveal songs on player
         if (this.currentSongIndex >= 0) {
@@ -227,6 +282,7 @@ const app = {
     updateAudio: function () { //plays audio after changing songs
         audioElements.src = app.songs[this.currentSongIndex].path
         this.playAudio()
+        
 
     },
 
@@ -236,6 +292,7 @@ const app = {
         playBtn[1].classList.add("play-state-active")
         this.updateProgress()
         this.updateTime()
+        this.endSong()
     },
 
     pauseAudio: function () {
@@ -257,13 +314,17 @@ const app = {
         audioElements.addEventListener("timeupdate", (e) => {
             let currentPercentage = audioElements.currentTime / app.songs[app.currentSongIndex].duration * 100
             currentProgress.style.width = `${currentPercentage}%`
+            
+            if (audioElements.ended){
+                app.nextSong()
+            }
         })
     },
 
     setProgress: function (e) {
         let mainProgress = $(".player__progress")
-        let newProgress = ((e.pageX - e.target.offsetLeft) / mainProgress.offsetWidth)*100
-        audioElements.currentTime = (app.songs[app.currentSongIndex].duration * newProgress/100)
+        let newProgress = ((e.pageX - e.target.offsetLeft) / mainProgress.offsetWidth) * 100
+        audioElements.currentTime = (app.songs[app.currentSongIndex].duration * newProgress / 100)
     },
 
     muteVolume: function (btn) {
@@ -273,18 +334,43 @@ const app = {
 
     },
 
-    setVolume: function () {
-        audioElements.volume = audioVolume
-        volumeSlider.style.width = `${audioVolume * 100}%`
+    updateVolume: function () {
+        audioElements.volume = this.audioVolume
+        volumeSlider.style.width = `${this.audioVolume * 100}%`
 
     },
 
-    changeVolume: function (e) {
+    setVolume: function (e) {
         let volumeBar = $(".volume__bar")
-        audioVolume = (e.pageX - e.target.offsetLeft) / volumeBar.offsetWidth
+        this.audioVolume = (e.pageX - e.target.offsetLeft) / volumeBar.offsetWidth
     },
 
+    shufflePlaylist: function () {
 
+        for (var array = [], i = 0; i < this.songsNumber; i++) {
+            array.push(i)
+        }
+
+        for (var newArray = [], i = this.songsNumber, tmp, removed; i > 0; i--) {
+            tmp = Math.floor(Math.random() * i)
+            removed = array.splice(tmp, 1)[0]
+            newArray.push(removed)
+        }
+
+        newArray.push(this.currentSongIndex)
+        dupEl = newArray.findIndex(el => el === this.currentSongIndex)
+        newArray.splice(dupEl, 1)
+
+        this.shuffleSongs = newArray
+        this.shuffleSongIndex = -1
+        
+    },
+
+    endSong: function() {
+        audioElements.addEventListener("ended", () => {
+                app.nextSong()
+        })
+    },
 
     start: async function () {
 
@@ -294,9 +380,10 @@ const app = {
         //create click events for elements
         this.addEvent()
 
-        //set volume
-        this.setVolume()
+        //update volume
+        this.updateVolume()
     },
+
 
 
 }
