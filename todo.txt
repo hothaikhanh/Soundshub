@@ -1,3 +1,2 @@
-
 dragable slider
 
