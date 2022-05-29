@@ -1,4 +1,3 @@
-repeat function
-next song after time ends
+
 dragable slider
 
